@@ -12,6 +12,7 @@ export default [
     path: '/massage',
     icon: 'ContainerOutlined',
     name: '信息管理',
+    access: 'canUser',
     routes: [
       { path: '/massage', redirect: '/massage/announcement' },
       {
@@ -66,6 +67,7 @@ export default [
     path: '/individual',
     icon: 'UserOutlined',
     name: '个人管理',
+    access: 'canUser',
     routes: [
       { path: '/individual', redirect: '/individual/salary' },
       {

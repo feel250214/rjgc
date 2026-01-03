@@ -1,6 +1,6 @@
 import CreateModal from '@/pages/Admin/User/components/CreateModal';
 import UpdateModal from '@/pages/Admin/User/components/UpdateModal';
-import { deleteEmployee } from '@/services/backend/employeeController';
+import { deleteEmployee, getAllEmployees } from '@/services/backend/employeeController';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
@@ -57,39 +57,45 @@ const UserAdminPage: React.FC = () => {
     },
     {
       title: '账号',
-      dataIndex: 'userAccount',
+      dataIndex: 'username',
       valueType: 'text',
     },
     {
       title: '用户名',
-      dataIndex: 'userName',
+      dataIndex: 'name',
       valueType: 'text',
     },
     {
-      title: '头像',
-      dataIndex: 'userAvatar',
-      valueType: 'image',
-      fieldProps: {
-        width: 64,
-      },
-      hideInSearch: true,
+      title: '邮箱',
+      dataIndex: 'email',
+      valueType: 'text',
     },
     {
-      title: '简介',
-      dataIndex: 'userProfile',
-      valueType: 'textarea',
+      title: '电话',
+      dataIndex: 'phone',
+      valueType: 'text',
     },
     {
-      title: '权限',
-      dataIndex: 'userRole',
-      valueEnum: {
-        user: {
-          text: '用户',
-        },
-        admin: {
-          text: '管理员',
-        },
-      },
+      title: '部门',
+      dataIndex: 'department',
+      valueType: 'text',
+      hideInForm: true,
+    },
+    {
+      title: '职位',
+      dataIndex: 'position',
+      valueType: 'text',
+      hideInForm: true,
+    },
+    {
+      title: '部门ID',
+      dataIndex: 'departmentId',
+      valueType: 'digit',
+    },
+    {
+      title: '职位ID',
+      dataIndex: 'positionId',
+      valueType: 'digit',
     },
     {
       title: '创建时间',
@@ -130,43 +136,40 @@ const UserAdminPage: React.FC = () => {
   ];
   return (
     <PageContainer>
-      {/*<ProTable<API.Employee>*/}
-      {/*  headerTitle={'查询表格'}*/}
-      {/*  actionRef={actionRef}*/}
-      {/*  rowKey="key"*/}
-      {/*  search={{*/}
-      {/*    labelWidth: 120,*/}
-      {/*  }}*/}
-      {/*  toolBarRender={() => [*/}
-      {/*    <Button*/}
-      {/*      type="primary"*/}
-      {/*      key="primary"*/}
-      {/*      onClick={() => {*/}
-      {/*        setCreateModalVisible(true);*/}
-      {/*      }}*/}
-      {/*    >*/}
-      {/*      <PlusOutlined /> 新建*/}
-      {/*    </Button>,*/}
-      {/*  ]}*/}
-      {/*  request={async (params, sort, filter) => {*/}
-      {/*    const sortField = Object.keys(sort)?.[0];*/}
-      {/*    const sortOrder = sort?.[sortField] ?? undefined;*/}
-
-      {/*    const { data, code } = await listUserByPageUsingPost({*/}
-      {/*      ...params,*/}
-      {/*      sortField,*/}
-      {/*      sortOrder,*/}
-      {/*      ...filter,*/}
-      {/*    } as API.UserQueryRequest);*/}
-
-      {/*    return {*/}
-      {/*      success: code === 0,*/}
-      {/*      data: data?.records || [],*/}
-      {/*      total: Number(data?.total) || 0,*/}
-      {/*    };*/}
-      {/*  }}*/}
-      {/*  columns={columns}*/}
-      {/*/>*/}
+      <ProTable<API.Employee>
+        headerTitle={'员工列表'}
+        actionRef={actionRef}
+        rowKey="id"
+        search={{
+          labelWidth: 120,
+        }}
+        toolBarRender={() => [
+          <Button
+            type="primary"
+            key="primary"
+            onClick={() => {
+              setCreateModalVisible(true);
+            }}
+          >
+            <PlusOutlined /> 新建
+          </Button>,
+        ]}
+        request={async (params) => {
+          const page = (params.current ?? 1) - 1;
+          const size = params.pageSize ?? 10;
+          const res = await getAllEmployees({
+            page,
+            size,
+          } as API.getAllEmployeesParams);
+          const pageData = res.data;
+          return {
+            success: res.code === 200,
+            data: pageData?.content || [],
+            total: pageData?.totalElements || 0,
+          };
+        }}
+        columns={columns}
+      />
       <CreateModal
         visible={createModalVisible}
         columns={columns}

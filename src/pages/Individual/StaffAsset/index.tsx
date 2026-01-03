@@ -2,15 +2,15 @@ import {
   getAssetApplicationsByEmployeeId,
   getAssetDistributions,
 } from '@/services/backend/assetApplicationController';
-import type {ActionType, ProColumns} from '@ant-design/pro-components';
-import {PageContainer, ProTable} from '@ant-design/pro-components';
-import {useModel} from '@umijs/max';
-import {message} from 'antd';
-import React, {useRef} from 'react';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
+import { message } from 'antd';
+import React, { useRef } from 'react';
 
 const StaffAssetPage: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const {initialState} = useModel('@@initialState');
+  const { initialState } = useModel('@@initialState');
   const currentUser = initialState?.currentUser as any;
   const employeeId = currentUser?.id ?? currentUser?.user?.id;
 
@@ -108,8 +108,7 @@ const StaffAssetPage: React.FC = () => {
                 } as API.getAssetDistributionsParams),
               ),
           );
-          const allDistributions =
-            distributionsList.flatMap((res) => res.data || []) || [];
+          const allDistributions = distributionsList.flatMap((res) => res.data || []) || [];
           const page = params.current || 1;
           const pageSize = params.pageSize || 10;
           const start = (page - 1) * pageSize;
@@ -127,4 +126,3 @@ const StaffAssetPage: React.FC = () => {
 };
 
 export default StaffAssetPage;
-

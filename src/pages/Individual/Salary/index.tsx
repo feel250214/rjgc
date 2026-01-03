@@ -1,13 +1,13 @@
-import {getSalaryDetailsByEmployeeId} from '@/services/backend/salaryDetailController';
-import type {ActionType, ProColumns} from '@ant-design/pro-components';
-import {PageContainer, ProTable} from '@ant-design/pro-components';
-import {useModel} from '@umijs/max';
-import {message} from 'antd';
-import React, {useRef} from 'react';
+import { getSalaryDetailsByEmployeeId } from '@/services/backend/salaryDetailController';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
+import { message } from 'antd';
+import React, { useRef } from 'react';
 
 const IndividualSalaryPage: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const {initialState} = useModel('@@initialState');
+  const { initialState } = useModel('@@initialState');
   const currentUser = initialState?.currentUser as any;
   const employeeId = currentUser?.id ?? currentUser?.user?.id;
 
@@ -128,4 +128,3 @@ const IndividualSalaryPage: React.FC = () => {
 };
 
 export default IndividualSalaryPage;
-

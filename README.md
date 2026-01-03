@@ -1,80 +1,308 @@
-# 人力资源管理系统
+# 人事管理系统后端
 
-> 作者：[感受](https://github.com/liyupi) 仅分享于 [编程导航知识星球](https://yupi.icu)
+## 项目概述
 
-基于 React + Ant Design 的项目初始模板，整合了常用框架和主流业务的示例代码。
+这是一个基于 Spring Boot 的人事管理系统后端，提供了简单的登录认证和员工管理功能。系统采用分层架构设计，包括控制层、服务层、数据访问层，以及 DTO 和 Converter 用于数据传输和转换。
 
-只需 1 分钟 即可完成网站的基础前端！！！大家还可以在此基础上快速开发自己的项目。
+## 技术栈
 
-[TOC]
+- Spring Boot 3.1.0
+- Spring Web
+- Spring Data JPA
+- MySQL
+- Lombok
 
-## 模板特点
+## 数据库设计
 
-### 主流框架 & 特性
+### 数据库脚本
 
-- Ant Design Pro 6.0.0
-- React 18.2.0
-- node 至少 16 版本及以上
-- antd 5.2.2
-- Type Script
-- 动态路由
-- Eslint
-- Prettier
+数据库脚本位于`hr_management.sql`文件中，包含数据库创建、表结构和示例数据。
 
-### Ant Design Pro 架构
+### 表结构
 
-#### Umi
+**employee 表** | 字段名 | 数据类型 | 描述 | | --- | --- | --- | | id | BIGINT | 主键 ID，自增 | | username | VARCHAR(50) | 用户名，唯一 | | password | VARCHAR(100) | 密码 | | name | VARCHAR(50) | 姓名 | | email | VARCHAR(100) | 邮箱 | | phone | VARCHAR(20) | 电话 | | department | VARCHAR(50) | 部门 | | position | VARCHAR(50) | 职位 | | create_time | DATETIME | 创建时间，默认当前时间 |
 
-- Node.js 前端开发基础环境
-- webpack 前端必学必会的打包工具
-- react-router 路由库
-- proxy 反向代理工具
-- dva 轻量级的应用框架
-- fabric 严格但是不严苛的 lint 规则集（eslint、stylelint、prettier)
-- Type Script 带类型的 JavaScript
+## 接口文档
 
-#### Ant Design 前端组件库
+### 基础 URL
 
-#### Ant Design Chart 简单好用的 React 图表库
+所有接口的基础 URL 为：`http://localhost:8080/api`
 
-#### ProComponents 模板组件
+### 认证接口
 
-- ProLayout - 提供开箱即用的菜单和面包屑功能
-- ProForm - 表单模板组件，预设常见布局和行为
-- ProTable - 表格模板组件，抽象网格请求和单元格样式
-- ProCard - 提供卡片切分以及栅格布局能力
+#### 登录接口
 
-#### umi 插件
+**接口路径**：`POST /auth/login`
 
-- 内置布局
-- 国际化
-- 权限
-- 数据流
+**请求参数**：
 
-### 业务特性
+```json
+{
+  "username": "admin",
+  "password": "123456"
+}
+```
 
-- 栅格布局（可自定义，可适应）
-- 简单权限管理
-- 全局初始数据（ getInitialState )
-- 默认使用 less 作为样式语言
-- OpenAPI 自动生成后端请求代码
-- 统一错误处理
+**返回结果**：
 
-## 业务功能
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "id": 1,
+    "username": "admin",
+    "name": "管理员",
+    "email": "admin@example.com",
+    "phone": "13800138000",
+    "department": "人力资源部",
+    "position": "经理",
+    "createTime": "2025-12-21T17:30:00"
+  }
+}
+```
 
-- 提供 OpenAPI 后端接口自动生成
-- 用户登录、用户注册
-- 管理员修改用户、新建用户、查询用户、删除用户
-- 动态路由展示（权限管理）
+### 员工管理接口
 
-## 快速上手
+#### 获取所有员工（分页）
 
-1）先启动后端的万用模板
+**接口路径**：`GET /employees`
 
-2）使用命令生成后端请求代码
+**请求参数**：
 
-3）将标题和 logo 等切换为个人
+- page：页码，默认 0
+- size：每页大小，默认 10
 
-4）测试业务功能
+**返回结果**：
 
-具体万用模板教程：[前端万用模板使用教程 (yuque.com)](https://bcdh.yuque.com/staff-wpxfif/resource/rnv6shm2l57rsx6x)
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "content": [
+      {
+        "id": 1,
+        "username": "admin",
+        "name": "管理员",
+        "email": "admin@example.com",
+        "phone": "13800138000",
+        "department": "人力资源部",
+        "position": "经理",
+        "createTime": "2025-12-21T17:30:00"
+      },
+      {
+        "id": 2,
+        "username": "user1",
+        "name": "张三",
+        "email": "zhangsan@example.com",
+        "phone": "13800138001",
+        "department": "技术部",
+        "position": "开发工程师",
+        "createTime": "2025-12-21T17:30:00"
+      }
+    ],
+    "pageable": {
+      "pageNumber": 0,
+      "pageSize": 10,
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "paged": true,
+      "unpaged": false
+    },
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 2,
+    "size": 10,
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "first": true,
+    "numberOfElements": 2,
+    "empty": false
+  }
+}
+```
+
+#### 根据 ID 获取员工
+
+**接口路径**：`GET /employees/{id}`
+
+**请求参数**：
+
+- id：员工 ID，路径参数
+
+**返回结果**：
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "id": 1,
+    "username": "admin",
+    "name": "管理员",
+    "email": "admin@example.com",
+    "phone": "13800138000",
+    "department": "人力资源部",
+    "position": "经理",
+    "createTime": "2025-12-21T17:30:00"
+  }
+}
+```
+
+#### 创建员工
+
+**接口路径**：`POST /employees`
+
+**请求参数**：
+
+```json
+{
+  "username": "user3",
+  "name": "王五",
+  "email": "wangwu@example.com",
+  "phone": "13800138003",
+  "department": "财务部",
+  "position": "财务会计"
+}
+```
+
+**返回结果**：
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "id": 3,
+    "username": "user3",
+    "name": "王五",
+    "email": "wangwu@example.com",
+    "phone": "13800138003",
+    "department": "财务部",
+    "position": "财务会计",
+    "createTime": "2025-12-21T17:30:00"
+  }
+}
+```
+
+#### 更新员工
+
+**接口路径**：`PUT /employees/{id}`
+
+**请求参数**：
+
+- id：员工 ID，路径参数
+
+```json
+{
+  "name": "张三三",
+  "email": "zhangsansan@example.com",
+  "phone": "13800138001",
+  "department": "技术部",
+  "position": "高级开发工程师"
+}
+```
+
+**返回结果**：
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "id": 2,
+    "username": "user1",
+    "name": "张三三",
+    "email": "zhangsansan@example.com",
+    "phone": "13800138001",
+    "department": "技术部",
+    "position": "高级开发工程师",
+    "createTime": "2025-12-21T17:30:00"
+  }
+}
+```
+
+#### 删除员工
+
+**接口路径**：`DELETE /employees/{id}`
+
+**请求参数**：
+
+- id：员工 ID，路径参数
+
+**返回结果**：
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": "Employee deleted successfully"
+}
+```
+
+## 示例数据
+
+数据库脚本中包含以下示例数据：
+
+| 用户名 | 密码   | 姓名   | 邮箱                 | 电话        | 部门       | 职位       |
+| ------ | ------ | ------ | -------------------- | ----------- | ---------- | ---------- |
+| admin  | 123456 | 管理员 | admin@example.com    | 13800138000 | 人力资源部 | 经理       |
+| user1  | 123456 | 张三   | zhangsan@example.com | 13800138001 | 技术部     | 开发工程师 |
+| user2  | 123456 | 李四   | lisi@example.com     | 13800138002 | 市场部     | 市场专员   |
+| user3  | 123456 | 王五   | wangwu@example.com   | 13800138003 | 财务部     | 财务会计   |
+| user4  | 123456 | 赵六   | zhaoliu@example.com  | 13800138004 | 技术部     | 测试工程师 |
+
+## 如何运行项目
+
+1. **创建数据库**
+
+   - 执行`hr_management.sql`脚本创建数据库和表结构，并插入示例数据
+
+2. **修改配置**
+
+   - 根据实际情况修改`application.properties`文件中的数据库连接配置
+
+3. **启动项目**
+
+   ```bash
+   mvn spring-boot:run
+   ```
+
+4. **测试接口**
+   - 使用 Postman 或其他 API 测试工具测试接口
+   - 登录接口：`POST http://localhost:8080/api/auth/login`
+   - 员工管理接口：`GET http://localhost:8080/api/employees`
+
+## 项目结构
+
+```
+src/main/java/com.hr/
+├── HrApplication.java           # 主启动类
+├── config/                      # 配置类
+│   └── WebConfig.java           # 跨域配置
+├── controller/                  # 控制层
+│   ├── AuthController.java      # 登录认证接口
+│   └── EmployeeController.java  # 员工管理接口
+├── service/                     # 服务层
+│   ├── AuthService.java         # 登录认证服务
+│   └── EmployeeService.java     # 员工管理服务
+├── dao/                         # 数据访问层
+│   └── EmployeeRepository.java  # 员工数据访问接口
+├── dto/                         # 数据传输对象
+│   ├── LoginDto.java            # 登录请求DTO
+│   ├── EmployeeDto.java         # 员工信息DTO
+│   └── ResponseDto.java         # 统一响应格式
+├── entity/                      # 实体类
+│   └── Employee.java            # 员工实体
+└── converter/                   # 转换器
+    └── EmployeeConverter.java   # 员工实体与DTO转换器
+```

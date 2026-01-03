@@ -26,17 +26,25 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: API.LoginDto) => {
     try {
-      // 登录
       const res = await login({
         ...values,
       });
 
       const defaultLoginSuccessMessage = '登录成功！';
       message.success(defaultLoginSuccessMessage);
-      // 保存已登录用户信息
+      const data = res.data as any;
+      const payload = data?.data ?? data;
+      const user = payload?.user ?? payload ?? {};
+      const currentUser = {
+        ...user,
+        userName: user.name,
+        userRole: user.username === 'admin' ? 'admin' : 'user',
+        token: payload?.token,
+      };
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
       setInitialState({
         ...initialState,
-        currentUser: res.data,
+        currentUser,
       });
       const urlParams = new URL(window.location.href).searchParams;
       history.push(urlParams.get('redirect') || '/');
@@ -94,7 +102,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
-                placeholder={'请输入账号'}
+                placeholder={'请输入用户名'}
                 rules={[
                   {
                     required: true,

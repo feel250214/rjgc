@@ -1,14 +1,14 @@
-import { updateUserUsingPost } from '@/services/backend/userController';
+import { updateEmployee } from '@/services/backend/employeeController';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
 import '@umijs/max';
 import { message, Modal } from 'antd';
 import React from 'react';
 
 interface Props {
-  oldData?: API.User;
+  oldData?: API.Employee;
   visible: boolean;
-  columns: ProColumns<API.User>[];
-  onSubmit: (values: API.UserAddRequest) => void;
+  columns: ProColumns<API.Employee>[];
+  onSubmit: (values: API.EmployeeDto) => void;
   onCancel: () => void;
 }
 
@@ -17,10 +17,15 @@ interface Props {
  *
  * @param fields
  */
-const handleUpdate = async (fields: API.UserUpdateRequest) => {
+const handleUpdate = async (id: number, fields: API.EmployeeDto) => {
   const hide = message.loading('正在更新');
   try {
-    await updateUserUsingPost(fields);
+    await updateEmployee(
+      {
+        id,
+      },
+      fields,
+    );
     hide();
     message.success('更新成功');
     return true;
@@ -59,11 +64,8 @@ const UpdateModal: React.FC<Props> = (props) => {
         form={{
           initialValues: oldData,
         }}
-        onSubmit={async (values: API.UserAddRequest) => {
-          const success = await handleUpdate({
-            ...values,
-            id: oldData.id as any,
-          });
+        onSubmit={async (values: API.EmployeeDto) => {
+          const success = await handleUpdate(oldData.id as number, values);
           if (success) {
             onSubmit?.(values);
           }

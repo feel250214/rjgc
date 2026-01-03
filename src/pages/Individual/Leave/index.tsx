@@ -1,13 +1,13 @@
-import {getLeaveApplicationsByEmployeeId} from '@/services/backend/leaveApplicationController';
-import type {ActionType, ProColumns} from '@ant-design/pro-components';
-import {PageContainer, ProTable} from '@ant-design/pro-components';
-import {useModel} from '@umijs/max';
-import {message} from 'antd';
-import React, {useRef} from 'react';
+import { getLeaveApplicationsByEmployeeId } from '@/services/backend/leaveApplicationController';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { useModel } from '@umijs/max';
+import { message } from 'antd';
+import React, { useRef } from 'react';
 
 const IndividualLeavePage: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const {initialState} = useModel('@@initialState');
+  const { initialState } = useModel('@@initialState');
   const currentUser = initialState?.currentUser as any;
   const employeeId = currentUser?.id ?? currentUser?.user?.id;
 
@@ -109,4 +109,3 @@ const IndividualLeavePage: React.FC = () => {
 };
 
 export default IndividualLeavePage;
-
