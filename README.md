@@ -46,6 +46,7 @@
 **接口路径**：`POST /auth/login`
 
 **请求参数**：
+
 ```json
 {
   "username": "admin",
@@ -54,6 +55,7 @@
 ```
 
 **返回结果**：
+
 ```json
 {
   "code": 200,
@@ -78,10 +80,12 @@
 **接口路径**：`GET /employees`
 
 **请求参数**：
+
 - page：页码，默认0
 - size：每页大小，默认10
 
 **返回结果**：
+
 ```json
 {
   "code": 200,
@@ -143,9 +147,11 @@
 **接口路径**：`GET /employees/{id}`
 
 **请求参数**：
+
 - id：员工ID，路径参数
 
 **返回结果**：
+
 ```json
 {
   "code": 200,
@@ -168,6 +174,7 @@
 **接口路径**：`POST /employees`
 
 **请求参数**：
+
 ```json
 {
   "username": "user3",
@@ -180,6 +187,7 @@
 ```
 
 **返回结果**：
+
 ```json
 {
   "code": 200,
@@ -202,7 +210,9 @@
 **接口路径**：`PUT /employees/{id}`
 
 **请求参数**：
+
 - id：员工ID，路径参数
+
 ```json
 {
   "name": "张三三",
@@ -214,6 +224,7 @@
 ```
 
 **返回结果**：
+
 ```json
 {
   "code": 200,
@@ -236,9 +247,11 @@
 **接口路径**：`DELETE /employees/{id}`
 
 **请求参数**：
+
 - id：员工ID，路径参数
 
 **返回结果**：
+
 ```json
 {
   "code": 200,
@@ -251,21 +264,21 @@
 
 数据库脚本中包含以下示例数据：
 
-| 用户名 | 密码 | 姓名 | 邮箱 | 电话 | 部门 | 职位 |
-| --- | --- | --- | --- | --- | --- | --- |
-| admin | 123456 | 管理员 | admin@example.com | 13800138000 | 人力资源部 | 经理 |
-| user1 | 123456 | 张三 | zhangsan@example.com | 13800138001 | 技术部 | 开发工程师 |
-| user2 | 123456 | 李四 | lisi@example.com | 13800138002 | 市场部 | 市场专员 |
-| user3 | 123456 | 王五 | wangwu@example.com | 13800138003 | 财务部 | 财务会计 |
-| user4 | 123456 | 赵六 | zhaoliu@example.com | 13800138004 | 技术部 | 测试工程师 |
+| 用户名   | 密码     | 姓名  | 邮箱                   | 电话          | 部门    | 职位    |
+|-------|--------|-----|----------------------|-------------|-------|-------|
+| admin | 123456 | 管理员 | admin@example.com    | 13800138000 | 人力资源部 | 经理    |
+| user1 | 123456 | 张三  | zhangsan@example.com | 13800138001 | 技术部   | 开发工程师 |
+| user2 | 123456 | 李四  | lisi@example.com     | 13800138002 | 市场部   | 市场专员  |
+| user3 | 123456 | 王五  | wangwu@example.com   | 13800138003 | 财务部   | 财务会计  |
+| user4 | 123456 | 赵六  | zhaoliu@example.com  | 13800138004 | 技术部   | 测试工程师 |
 
 ## 如何运行项目
 
 1. **创建数据库**
-   - 执行`hr_management.sql`脚本创建数据库和表结构，并插入示例数据
+    - 执行`hr_management.sql`脚本创建数据库和表结构，并插入示例数据
 
 2. **修改配置**
-   - 根据实际情况修改`application.properties`文件中的数据库连接配置
+    - 根据实际情况修改`application.properties`文件中的数据库连接配置
 
 3. **启动项目**
    ```bash
@@ -273,9 +286,9 @@
    ```
 
 4. **测试接口**
-   - 使用Postman或其他API测试工具测试接口
-   - 登录接口：`POST http://localhost:8080/api/auth/login`
-   - 员工管理接口：`GET http://localhost:8080/api/employees`
+    - 使用Postman或其他API测试工具测试接口
+    - 登录接口：`POST http://localhost:8080/api/auth/login`
+    - 员工管理接口：`GET http://localhost:8080/api/employees`
 
 ## 项目结构
 

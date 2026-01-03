@@ -8,6 +8,7 @@ import java.util.Date;
 public class EmployeeDto {
     private Long id;
     private String username;
+    private String password;
     private String name;
     private String email;
     private String phone;

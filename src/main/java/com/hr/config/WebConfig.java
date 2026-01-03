@@ -9,6 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     /**
      * 配置跨域访问
+     *
      * @param registry 跨域注册器
      */
     @Override

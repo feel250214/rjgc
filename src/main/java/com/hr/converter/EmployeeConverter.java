@@ -9,6 +9,7 @@ public class EmployeeConverter {
 
     /**
      * 将Employee实体转换为EmployeeDto
+     *
      * @param employee 员工实体
      * @return 员工DTO
      */
@@ -22,14 +23,16 @@ public class EmployeeConverter {
         dto.setName(employee.getName());
         dto.setEmail(employee.getEmail());
         dto.setPhone(employee.getPhone());
-        dto.setDepartment(employee.getDepartment());
-        dto.setPosition(employee.getPosition());
+        // 部门和职位名称将通过关联查询获取，暂时设置为null
+        dto.setDepartment(null);
+        dto.setPosition(null);
         dto.setCreateTime(employee.getCreateTime());
         return dto;
     }
 
     /**
      * 将EmployeeDto转换为Employee实体
+     *
      * @param dto 员工DTO
      * @return 员工实体
      */
@@ -43,8 +46,9 @@ public class EmployeeConverter {
         employee.setName(dto.getName());
         employee.setEmail(dto.getEmail());
         employee.setPhone(dto.getPhone());
-        employee.setDepartment(dto.getDepartment());
-        employee.setPosition(dto.getPosition());
+        // 部门和职位ID将通过其他方式设置，暂时设置为null
+        employee.setDepartmentId(null);
+        employee.setPositionId(null);
         return employee;
     }
 }
