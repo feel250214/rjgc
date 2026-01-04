@@ -61,16 +61,6 @@ public class Employee {
     private String phone;
 
     /**
-     * 部门
-     */
-    private String department;
-
-    /**
-     * 职位
-     */
-    private String position;
-
-    /**
      * 部门ID
      */
     @NotNull(message = "部门ID不能为空")

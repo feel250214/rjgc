@@ -139,21 +139,6 @@ public class EmployeeController {
                 employee.setPassword("123456");
             }
 
-            // 设置部门和职位名称
-            if (employee.getDepartmentId() != null) {
-                Department department = departmentService.getDepartmentById(employee.getDepartmentId());
-                if (department != null) {
-                    employee.setDepartment(department.getName());
-                }
-            }
-
-            if (employee.getPositionId() != null) {
-                Position position = positionService.getPositionById(employee.getPositionId());
-                if (position != null) {
-                    employee.setPosition(position.getName());
-                }
-            }
-
             Employee savedEmployee = employeeService.createEmployee(employee);
             return ResponseDto.success(employeeConverter.toDto(savedEmployee));
         } catch (Exception e) {
@@ -193,8 +178,6 @@ public class EmployeeController {
             // 保留原有部门和职位信息
             employee.setDepartmentId(existingEmployee.getDepartmentId());
             employee.setPositionId(existingEmployee.getPositionId());
-            employee.setDepartment(existingEmployee.getDepartment());
-            employee.setPosition(existingEmployee.getPosition());
 
             // 更新员工
             Employee updatedEmployee = employeeService.updateEmployee(id, employee);

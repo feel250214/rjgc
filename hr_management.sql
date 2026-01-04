@@ -1,5 +1,6 @@
--- 创建数据库
-CREATE DATABASE IF NOT EXISTS hr_management DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- 创建数据库（开发环境全量重建，避免重复外键等错误）
+DROP DATABASE IF EXISTS hr_management;
+CREATE DATABASE hr_management DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 使用数据库
 USE hr_management;
@@ -457,7 +458,7 @@ VALUES ('办公用品采购', 2500.00, '2025-12-01', '采购A4纸和笔记本', 
 
 -- 薪资异议示例数据
 INSERT INTO salary_dispute (employee_id, salary_detail_id, dispute_content, status, hr_reply, handler_id, handle_time)
-VALUES (6, 4, '12月份绩效奖金计算有误', '已处理', '经核实，绩效奖金计算正确，详情请查看绩效评分表', 11,
+VALUES (6, 4, '12月份绩效奖金计算有误', '已处理', '经核实，加班工资计算正确，详情请查看绩效评分表', 4,
         '2025-12-20 10:00:00');
 
 -- 审批记录示例数据

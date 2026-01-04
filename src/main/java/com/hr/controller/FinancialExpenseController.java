@@ -6,6 +6,7 @@ import com.hr.service.FinancialExpenseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -82,8 +83,8 @@ public class FinancialExpenseController {
      */
     @GetMapping("/date-range")
     public ResponseDto<List<FinancialExpense>> getFinancialExpensesByDateRange(
-            @RequestParam Date startDate,
-            @RequestParam Date endDate) {
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         try {
             List<FinancialExpense> financialExpenses = financialExpenseService.getFinancialExpensesByDateRange(startDate, endDate);
             return ResponseDto.success(financialExpenses);
