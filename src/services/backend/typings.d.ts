@@ -182,8 +182,6 @@ declare namespace API {
     name: string;
     email?: string;
     phone?: string;
-    department?: string;
-    position?: string;
     departmentId: number;
     positionId: number;
     createTime?: string;
@@ -454,10 +452,10 @@ declare namespace API {
   type PageableObject = {
     offset?: number;
     sort?: SortObject;
-    pageNumber?: number;
     pageSize?: number;
-    paged?: boolean;
+    pageNumber?: number;
     unpaged?: boolean;
+    paged?: boolean;
   };
 
   type PageAnnouncement = {

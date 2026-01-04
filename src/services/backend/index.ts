@@ -15,7 +15,6 @@ import * as performanceRecordController from './performanceRecordController';
 import * as positionController from './positionController';
 import * as salaryDetailController from './salaryDetailController';
 import * as salaryDisputeController from './salaryDisputeController';
-
 export default {
   salaryDetailController,
   positionController,

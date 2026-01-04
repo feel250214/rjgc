@@ -164,7 +164,7 @@ const UserAdminPage: React.FC = () => {
           const pageData = res.data;
           return {
             success: res.code === 200,
-            data: pageData?.content || [],
+            data: (pageData?.content as API.Employee[] | undefined) || [],
             total: pageData?.totalElements || 0,
           };
         }}
